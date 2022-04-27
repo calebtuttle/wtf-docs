@@ -91,49 +91,6 @@ Parameter | Description
 address | A user's crypto address.
 
 
-## getAllUserAddresses()
-
-> Get every crypto address that has registered on a WTF contract.
-
-```javascript
-const userAddresses = await getAllUserAddresses()
-```
-
-> Returns
-
-```json
-{
-    "gnosis": {
-        "orcid": [
-            "0xc8834c1fcf0df6623fc8c8ed25064a4148d99388",
-            "0xdbd6b2c02338919edaa192f5b60f5e5840a50079", 
-        ],
-        "google": [
-            "0xc8834c1fcf0df6623fc8c8ed25064a4148d99388",
-            "0xdbd6b2c02338919edaa192f5b60f5e5840a50079", 
-        ],
-        "twitter": [
-            "0xc8834c1fcf0df6623fc8c8ed25064a4148d99388",
-            "0xdbd6b2c02338919edaa192f5b60f5e5840a50079", 
-        ],
-        "github": [
-            "0xc8834c1fcf0df6623fc8c8ed25064a4148d99388",
-            "0xdbd6b2c02338919edaa192f5b60f5e5840a50079", 
-        ],
-        "discord": [],
-        "nameAndBio": [
-            "0xc8834c1fcf0df6623fc8c8ed25064a4148d99388",
-            "0xdbd6b2c02338919edaa192f5b60f5e5840a50079", 
-        ],
-    }
-}
-```
-
-This function returns every crypto address that has registered on a WTF contract. 
-
-It sorts users by network and service. It does not remove duplicates, so if a user has linked their crypto address with their ORCID ID and their gmail, their address will show up in both the "orcid" list and the "google" list.
-
-
 ## credentialsForAddress(address, service)
 
 > Get a user's gmail.

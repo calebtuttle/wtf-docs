@@ -325,9 +325,6 @@
                     <a href="#getholo-address" class="toc-h2 toc-link" data-title="getHolo(address)">getHolo(address)</a>
                   </li>
                   <li>
-                    <a href="#getalluseraddresses" class="toc-h2 toc-link" data-title="getAllUserAddresses()">getAllUserAddresses()</a>
-                  </li>
-                  <li>
                     <a href="#credentialsforaddress-address-service" class="toc-h2 toc-link" data-title="credentialsForAddress(address, service)">credentialsForAddress(address, service)</a>
                   </li>
                   <li>
@@ -411,44 +408,6 @@ The default provider links to Ropsten testnet. If you are on a different network
 <td>A user&#39;s crypto address.</td>
 </tr>
 </tbody></table>
-<h2 id='getalluseraddresses'>getAllUserAddresses()</h2>
-<blockquote>
-<p>Get every crypto address that has registered on a WTF contract.</p>
-</blockquote>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">userAddresses</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">getAllUserAddresses</span><span class="p">()</span>
-</code></pre></div>
-<blockquote>
-<p>Returns</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"gnosis"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"orcid"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"0xc8834c1fcf0df6623fc8c8ed25064a4148d99388"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"0xdbd6b2c02338919edaa192f5b60f5e5840a50079"</span><span class="p">,</span><span class="w"> 
-        </span><span class="p">],</span><span class="w">
-        </span><span class="nl">"google"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"0xc8834c1fcf0df6623fc8c8ed25064a4148d99388"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"0xdbd6b2c02338919edaa192f5b60f5e5840a50079"</span><span class="p">,</span><span class="w"> 
-        </span><span class="p">],</span><span class="w">
-        </span><span class="nl">"twitter"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"0xc8834c1fcf0df6623fc8c8ed25064a4148d99388"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"0xdbd6b2c02338919edaa192f5b60f5e5840a50079"</span><span class="p">,</span><span class="w"> 
-        </span><span class="p">],</span><span class="w">
-        </span><span class="nl">"github"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"0xc8834c1fcf0df6623fc8c8ed25064a4148d99388"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"0xdbd6b2c02338919edaa192f5b60f5e5840a50079"</span><span class="p">,</span><span class="w"> 
-        </span><span class="p">],</span><span class="w">
-        </span><span class="nl">"discord"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-        </span><span class="nl">"nameAndBio"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"0xc8834c1fcf0df6623fc8c8ed25064a4148d99388"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"0xdbd6b2c02338919edaa192f5b60f5e5840a50079"</span><span class="p">,</span><span class="w"> 
-        </span><span class="p">],</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<p>This function returns every crypto address that has registered on a WTF contract. </p>
-
-<p>It sorts users by network and service. It does not remove duplicates, so if a user has linked their crypto address with their ORCID ID and their gmail, their address will show up in both the &quot;orcid&quot; list and the &quot;google&quot; list.</p>
 <h2 id='credentialsforaddress-address-service'>credentialsForAddress(address, service)</h2>
 <blockquote>
 <p>Get a user&#39;s gmail.</p>

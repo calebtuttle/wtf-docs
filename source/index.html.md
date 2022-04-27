@@ -1,14 +1,10 @@
 ---
-title: API Reference
+title: wtf-lib API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
   - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -20,226 +16,218 @@ code_clipboard: true
 
 meta:
   - name: description
-    content: Documentation for the Kittn API
+    content: Documentation for wtf-lib
 ---
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the docs for the wtf-lib JavaScript library, a library that allows developers to query WTF protocol smart contracts.
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+# Configuration
 
-This example API documentation page was created with [Slate](https://github.com/slatedocs/slate). Feel free to edit it and use it as a base for your own API's documentation.
-
-# Authentication
-
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
-
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here" \
-  -H "Authorization: meowmeowmeow"
-```
+> Import wtf-lib (CommonJS)
 
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
+const wtf = require('wtf-lib'); 
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+> Import wtf-lib (ESM)
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+```javascript
+import wtf from 'wtf-lib';
+```
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
-`Authorization: meowmeowmeow`
+> Tell wtf to use the Gnosis Chain JSON RPC provider exposed at https://rpc.gnosischain.com/ for all calls to WTF smart contracts on Gnosis Chain.
+
+```javascript
+wtf.setProviderURL({gnosis: 'https://rpc.gnosischain.com/'})
+```
+
+Import and set the URL(s) of your JSON RPC provider(s) (e.g., to your Pocket, Infura, or Moralis node). It is recommended that projects call this function to configure wtf-lib to use their provider and do not rely on wtf-lib default node. It is also best practice to use a custom provider on Pocket, Infura, Alchemy, etc. instead of the networks default RPC because these custom RPCs are faster.
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+The default provider links to Ropsten testnet. If you are on a different network, you should use a custom provider. You will have best performance with a custom RPC provider rather than a network's default RPC. 
 </aside>
 
-# Kittens
+# Accessor Functions
 
-## Get All Kittens
 
-```ruby
-require 'kittn'
+## getHolo(address)
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens" \
-  -H "Authorization: meowmeowmeow"
-```
+> Get a user's holo (i.e., their name, bio, and all their credentials).
 
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
+const userHolo = await getHolo('0xdbd6b2c02338919edaa192f5b60f5e5840a50079')
 ```
 
-> The above command returns JSON structured like this:
+> Returns
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
+{
+  "gnosis": {
+    "name": "Jerry",
+    "bio": "The gerbil (the real one) 🐹",
+    "twitter": "",
+    "github": "",
+    "discord": "",
+    "orcid": "",
+    "google": "thejerrygerbil@gmail.com"
   },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
+  "ethereum": {
+      ...
   }
-]
+}
 ```
 
-This endpoint retrieves all kittens.
+This function returns the user's name, bio, and all their credentials, given their address. 
 
-### HTTP Request
+It organizes the user's holo by blockchain network. A user can use the same address to register different credentials on different blockchains. By organizing a user's holo by network, `getHolo` allows projects to use holos from only certain networks and to resolve any contradictions that might arise with using multiple profiles.
 
-`GET http://example.com/api/kittens`
+### Parameters
 
-### Query Parameters
+Parameter | Description
+--------- | -----------
+address | A user's crypto address.
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
 
-<aside class="success">
+## getAllUserAddresses()
+
+> Get every crypto address that has registered on a WTF contract.
+
+```javascript
+const userAddresses = await getAllUserAddresses()
+```
+
+> Returns
+
+```json
+{
+    "gnosis": {
+        "orcid": [
+            "0xc8834c1fcf0df6623fc8c8ed25064a4148d99388",
+            "0xdbd6b2c02338919edaa192f5b60f5e5840a50079", 
+        ],
+        "google": [
+            "0xc8834c1fcf0df6623fc8c8ed25064a4148d99388",
+            "0xdbd6b2c02338919edaa192f5b60f5e5840a50079", 
+        ],
+        "twitter": [
+            "0xc8834c1fcf0df6623fc8c8ed25064a4148d99388",
+            "0xdbd6b2c02338919edaa192f5b60f5e5840a50079", 
+        ],
+        "github": [
+            "0xc8834c1fcf0df6623fc8c8ed25064a4148d99388",
+            "0xdbd6b2c02338919edaa192f5b60f5e5840a50079", 
+        ],
+        "discord": [],
+        "nameAndBio": [
+            "0xc8834c1fcf0df6623fc8c8ed25064a4148d99388",
+            "0xdbd6b2c02338919edaa192f5b60f5e5840a50079", 
+        ],
+    }
+}
+```
+
+This function returns every crypto address that has registered on a WTF contract. 
+
+It sorts users by network and service. It does not remove duplicates, so if a user has linked their crypto address with their ORCID ID and their gmail, their address will show up in both the "orcid" list and the "google" list.
+
+
+## credentialsForAddress(address, service)
+
+> Get a user's gmail.
+
+```javascript
+const userGmail = await credentialsForAddress('0xdbd6b2c02338919edaa192f5b60f5e5840a50079', 'google')
+```
+
+> Returns
+
+```javascript
+'thejerrygerbil@gmail.com'
+```
+
+This function returns the user's credentials (e.g., their ORCID ID or gmail), given the user's crypto address. 
+
+### Parameters
+
+Parameter | Description
+--------- | -----------
+address | A user's crypto address.
+service | The service that issued the credentials (e.g., ORCID or Google).
+
+<!-- <aside class="success">
 Remember — a happy kitten is an authenticated kitten!
-</aside>
+</aside> -->
 
-## Get a Specific Kitten
 
-```ruby
-require 'kittn'
+## addressForCredentials(credentials, service)
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2" \
-  -H "Authorization: meowmeowmeow"
-```
+> Get a user's crypto address.
 
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
+const userAddress = await addressForCredentials('thejerrygerbil@gmail.com', 'google')
 ```
 
-> The above command returns JSON structured like this:
+> Returns
 
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
+```javascript
+'0xdbd6b2c02338919edaa192f5b60f5e5840a50079'
 ```
 
-This endpoint retrieves a specific kitten.
+This function returns the user's crypto address, given their credentials (e.g., their ORCID ID or gmail). 
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
+### Parameters
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the kitten to retrieve
+credentials | A user's credentials.
+service | The service that issued the credentials (e.g., ORCID or Google).
 
-## Delete a Specific Kitten
 
-```ruby
-require 'kittn'
+## nameForAddress(address)
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2" \
-  -X DELETE \
-  -H "Authorization: meowmeowmeow"
-```
+> Get a user's name.
 
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
+const userName = await nameForAddress('0xdbd6b2c02338919edaa192f5b60f5e5840a50079')
 ```
 
-> The above command returns JSON structured like this:
+> Returns
 
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
+```javascript
+'Jerry'
 ```
 
-This endpoint deletes a specific kitten.
+This function returns the user's name, given their address.
 
-### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
-
-### URL Parameters
+### Parameters
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the kitten to delete
+address | A user's crypto address.
+
+## bioForAddress(address)
+
+
+> Get a user's bio/description.
+
+```javascript
+const userBio = await bioForAddress('0xdbd6b2c02338919edaa192f5b60f5e5840a50079')
+```
+
+> Returns
+
+```javascript
+'The gerbil (the real one) 🐹'
+```
+
+This function returns the user's bio/description, given their address.
+
+### Parameters
+
+Parameter | Description
+--------- | -----------
+address | A user's crypto address.
 

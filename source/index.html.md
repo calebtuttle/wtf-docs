@@ -23,7 +23,9 @@ meta:
 
 Welcome to the docs for Holonym. 
 Here you can find docs for 
+
 - wtf-lib, a JavaScript library that allows developers to query WTF protocol smart contracts
+
 - WTF smart contracts
 
 # wtf-lib
@@ -203,6 +205,8 @@ All credentials (e.g., a user's Twitter handle) are stored as bytes. You can con
 WTF contracts are currently deployed on Gnosis Chain. See the [contract addresses section](#contract-addresses) for the full list of contract addresses.
 
 Each contract exposes functions to query user data.
+
+Note: The following code snippets are Solidity, not JavaScript.
 
 ## IdentityAggregator.getAllAccounts(address user)
 

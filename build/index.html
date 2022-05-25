@@ -316,11 +316,11 @@
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
           </li>
           <li>
-            <a href="#configuration" class="toc-h1 toc-link" data-title="Configuration">Configuration</a>
-          </li>
-          <li>
-            <a href="#accessor-functions" class="toc-h1 toc-link" data-title="Accessor Functions">Accessor Functions</a>
+            <a href="#wtf-lib" class="toc-h1 toc-link" data-title="wtf-lib">wtf-lib</a>
               <ul class="toc-list-h2">
+                  <li>
+                    <a href="#configuration" class="toc-h2 toc-link" data-title="Configuration">Configuration</a>
+                  </li>
                   <li>
                     <a href="#getholo-address" class="toc-h2 toc-link" data-title="getHolo(address)">getHolo(address)</a>
                   </li>
@@ -338,6 +338,32 @@
                   </li>
               </ul>
           </li>
+          <li>
+            <a href="#wtf-smart-contracts" class="toc-h1 toc-link" data-title="WTF smart contracts">WTF smart contracts</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#introduction-2" class="toc-h2 toc-link" data-title="Introduction">Introduction</a>
+                  </li>
+                  <li>
+                    <a href="#identityaggregator-getallaccounts-address-user" class="toc-h2 toc-link" data-title="IdentityAggregator.getAllAccounts(address user)">IdentityAggregator.getAllAccounts(address user)</a>
+                  </li>
+                  <li>
+                    <a href="#verifyjwt-credsforaddress-address-user" class="toc-h2 toc-link" data-title="VerifyJWT.credsForAddress(address user)">VerifyJWT.credsForAddress(address user)</a>
+                  </li>
+                  <li>
+                    <a href="#verifyjwt-addressforcreds-bytes-creds" class="toc-h2 toc-link" data-title="VerifyJWT.addressForCreds(bytes creds)">VerifyJWT.addressForCreds(bytes creds)</a>
+                  </li>
+                  <li>
+                    <a href="#wtfbios-bioforaddress-address-user" class="toc-h2 toc-link" data-title="WTFBios.bioForAddress(address user)">WTFBios.bioForAddress(address user)</a>
+                  </li>
+                  <li>
+                    <a href="#wtfbios-nameforaddress-address-user" class="toc-h2 toc-link" data-title="WTFBios.nameForAddress(address user)">WTFBios.nameForAddress(address user)</a>
+                  </li>
+                  <li>
+                    <a href="#contract-addresses" class="toc-h2 toc-link" data-title="Contract Addresses">Contract Addresses</a>
+                  </li>
+              </ul>
+          </li>
       </ul>
         <ul class="toc-footer">
             <li><a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a></li>
@@ -347,8 +373,11 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the docs for the wtf-lib JavaScript library, a library that allows developers to query WTF protocol smart contracts.</p>
-<h1 id='configuration'>Configuration</h1>
+<p>Welcome to the docs for Holonym. 
+Here you can find docs for 
+- wtf-lib, a JavaScript library that allows developers to query WTF protocol smart contracts
+- WTF smart contracts</p>
+<h1 id='wtf-lib'>wtf-lib</h1><h2 id='configuration'>Configuration</h2>
 <blockquote>
 <p>Import wtf-lib (CommonJS)</p>
 </blockquote>
@@ -369,11 +398,11 @@
 <aside class="notice">
 The default provider links to Ropsten testnet. If you are on a different network, you should use a custom provider. You will have best performance with a custom RPC provider rather than a network's default RPC. 
 </aside>
-<h1 id='accessor-functions'>Accessor Functions</h1><h2 id='getholo-address'>getHolo(address)</h2>
+<h2 id='getholo-address'>getHolo(address)</h2>
 <blockquote>
 <p>Get a user&#39;s holo (i.e., their name, bio, and all their credentials).</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">userHolo</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">getHolo</span><span class="p">(</span><span class="dl">'</span><span class="s1">0xdbd6b2c02338919edaa192f5b60f5e5840a50079</span><span class="dl">'</span><span class="p">)</span>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">userHolo</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">wtf</span><span class="p">.</span><span class="nx">getHolo</span><span class="p">(</span><span class="dl">'</span><span class="s1">0xdbd6b2c02338919edaa192f5b60f5e5840a50079</span><span class="dl">'</span><span class="p">)</span>
 </code></pre></div>
 <blockquote>
 <p>Returns</p>
@@ -396,7 +425,7 @@ The default provider links to Ropsten testnet. If you are on a different network
 <p>This function returns the user&#39;s name, bio, and all their credentials, given their address. </p>
 
 <p>It organizes the user&#39;s holo by blockchain network. A user can use the same address to register different credentials on different blockchains. By organizing a user&#39;s holo by network, <code>getHolo</code> allows projects to use holos from only certain networks and to resolve any contradictions that might arise with using multiple profiles.</p>
-<h3 id='parameters'>Parameters</h3>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -412,7 +441,7 @@ The default provider links to Ropsten testnet. If you are on a different network
 <blockquote>
 <p>Get a user&#39;s gmail.</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">userGmail</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">credentialsForAddress</span><span class="p">(</span><span class="dl">'</span><span class="s1">0xdbd6b2c02338919edaa192f5b60f5e5840a50079</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">google</span><span class="dl">'</span><span class="p">)</span>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">userGmail</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">wtf</span><span class="p">.</span><span class="nx">credentialsForAddress</span><span class="p">(</span><span class="dl">'</span><span class="s1">0xdbd6b2c02338919edaa192f5b60f5e5840a50079</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">google</span><span class="dl">'</span><span class="p">)</span>
 </code></pre></div>
 <blockquote>
 <p>Returns</p>
@@ -420,7 +449,7 @@ The default provider links to Ropsten testnet. If you are on a different network
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="dl">'</span><span class="s1">thejerrygerbil@gmail.com</span><span class="dl">'</span>
 </code></pre></div>
 <p>This function returns the user&#39;s credentials (e.g., their ORCID ID or gmail), given the user&#39;s crypto address. </p>
-<h3 id='parameters-2'>Parameters</h3>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -444,7 +473,7 @@ Remember — a happy kitten is an authenticated kitten!
 <blockquote>
 <p>Get a user&#39;s crypto address.</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">userAddress</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">addressForCredentials</span><span class="p">(</span><span class="dl">'</span><span class="s1">thejerrygerbil@gmail.com</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">google</span><span class="dl">'</span><span class="p">)</span>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">userAddress</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">wtf</span><span class="p">.</span><span class="nx">addressForCredentials</span><span class="p">(</span><span class="dl">'</span><span class="s1">thejerrygerbil@gmail.com</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">google</span><span class="dl">'</span><span class="p">)</span>
 </code></pre></div>
 <blockquote>
 <p>Returns</p>
@@ -452,7 +481,7 @@ Remember — a happy kitten is an authenticated kitten!
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="dl">'</span><span class="s1">0xdbd6b2c02338919edaa192f5b60f5e5840a50079</span><span class="dl">'</span>
 </code></pre></div>
 <p>This function returns the user&#39;s crypto address, given their credentials (e.g., their ORCID ID or gmail). </p>
-<h3 id='parameters-3'>Parameters</h3>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -472,7 +501,7 @@ Remember — a happy kitten is an authenticated kitten!
 <blockquote>
 <p>Get a user&#39;s name.</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">userName</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">nameForAddress</span><span class="p">(</span><span class="dl">'</span><span class="s1">0xdbd6b2c02338919edaa192f5b60f5e5840a50079</span><span class="dl">'</span><span class="p">)</span>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">userName</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">wtf</span><span class="p">.</span><span class="nx">nameForAddress</span><span class="p">(</span><span class="dl">'</span><span class="s1">0xdbd6b2c02338919edaa192f5b60f5e5840a50079</span><span class="dl">'</span><span class="p">)</span>
 </code></pre></div>
 <blockquote>
 <p>Returns</p>
@@ -480,7 +509,7 @@ Remember — a happy kitten is an authenticated kitten!
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="dl">'</span><span class="s1">Jerry</span><span class="dl">'</span>
 </code></pre></div>
 <p>This function returns the user&#39;s name, given their address.</p>
-<h3 id='parameters-4'>Parameters</h3>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -496,7 +525,7 @@ Remember — a happy kitten is an authenticated kitten!
 <blockquote>
 <p>Get a user&#39;s bio/description.</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">userBio</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">bioForAddress</span><span class="p">(</span><span class="dl">'</span><span class="s1">0xdbd6b2c02338919edaa192f5b60f5e5840a50079</span><span class="dl">'</span><span class="p">)</span>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">userBio</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">wtf</span><span class="p">.</span><span class="nx">bioForAddress</span><span class="p">(</span><span class="dl">'</span><span class="s1">0xdbd6b2c02338919edaa192f5b60f5e5840a50079</span><span class="dl">'</span><span class="p">)</span>
 </code></pre></div>
 <blockquote>
 <p>Returns</p>
@@ -504,7 +533,7 @@ Remember — a happy kitten is an authenticated kitten!
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="dl">'</span><span class="s1">The gerbil (the real one) 🐹</span><span class="dl">'</span>
 </code></pre></div>
 <p>This function returns the user&#39;s bio/description, given their address.</p>
-<h3 id='parameters-5'>Parameters</h3>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -516,6 +545,165 @@ Remember — a happy kitten is an authenticated kitten!
 <td>A user&#39;s crypto address.</td>
 </tr>
 </tbody></table>
+<h1 id='wtf-smart-contracts'>WTF smart contracts</h1><h2 id='introduction-2'>Introduction</h2>
+<p>The WTF protocol consists of 3 types of smart contracts:</p>
+
+<ul>
+<li><p>VerifyJWT (verifies JWTs and stores user&#39;s credentials (e.g., their ORCID))</p></li>
+<li><p>WTFBios (allows users to set the name and bio associated with their Holo)</p></li>
+<li><p>IdentityAggregator (aggregates all profile data for each Holonym user)</p></li>
+</ul>
+
+<p>For any blockchain network to which WTF contracts have been deployed, there will be multiple VerifyJWT contracts but only one WTFBios contract and one IdentityAggregator contract. There is a VerifyJWT contract for Twitter, one for ORCID, etc.</p>
+
+<p>All credentials (e.g., a user&#39;s Twitter handle) are stored as bytes. You can convert bytes to string in JavaScript with the following line: <code>Buffer.from(creds.replace(&#39;0x&#39;,&#39;&#39;), &#39;hex&#39;).toString()</code>.</p>
+
+<p>WTF contracts are currently deployed on Gnosis Chain. See the <a href="#contract-addresses">contract addresses section</a> for the full list of contract addresses.</p>
+
+<p>Each contract exposes functions to query user data.</p>
+<h2 id='identityaggregator-getallaccounts-address-user'>IdentityAggregator.getAllAccounts(address user)</h2>
+<blockquote>
+<p>Get all accounts associated with this user&#39;s crypto address. </p>
+</blockquote>
+<div class="highlight"><pre class="highlight solidity tab-solidity"><code><span class="n">IdentityAggregator</span> <span class="n">idAggregator</span> <span class="o">=</span> <span class="n">IdentityAggregator</span><span class="p">(</span><span class="mh">0x4278b0B8aC44dc61579d5Ec3F01D8EA44873b079</span><span class="p">);</span>
+<span class="p">(</span><span class="kt">bytes</span><span class="p">[]</span> <span class="k">memory</span> <span class="n">creds</span><span class="p">,</span> <span class="kt">string</span> <span class="k">memory</span> <span class="n">name</span><span class="p">,</span> <span class="kt">string</span> <span class="k">memory</span> <span class="n">bio</span><span class="p">)</span> <span class="o">=</span> <span class="n">idAggregator</span><span class="p">.</span><span class="n">getAllAccounts</span><span class="p">(</span><span class="mh">0xdbd6b2c02338919edaa192f5b60f5e5840a50079</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p>Return values</p>
+</blockquote>
+<div class="highlight"><pre class="highlight solidity tab-solidity"><code><span class="n">creds</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="n">x</span><span class="p">...,</span> <span class="mi">0</span><span class="n">x</span><span class="p">...]</span>
+<span class="n">name</span> <span class="o">==</span> <span class="s">'Jerry'</span>
+<span class="n">bio</span> <span class="o">==</span> <span class="s">'The gerbil (the real one) 🐹'</span>
+</code></pre></div>
+<p>Get all accounts associated with this user&#39;s crypto address. The <code>getHolo</code> function in wtf-lib uses <code>getAllAccounts</code> under the hood. We expect creds to be converted to strings in the front end.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>user</td>
+<td>A user&#39;s crypto address.</td>
+</tr>
+</tbody></table>
+<h2 id='verifyjwt-credsforaddress-address-user'>VerifyJWT.credsForAddress(address user)</h2>
+<blockquote>
+<p>Get the creds linked to this user&#39;s crypto address on this specific VerifyJWT contract.</p>
+</blockquote>
+<div class="highlight"><pre class="highlight solidity tab-solidity"><code><span class="n">VerifyJWT</span> <span class="n">vjwt</span> <span class="o">=</span> <span class="n">VerifyJWT</span><span class="p">(</span><span class="mh">0x97A2FAf052058b86a52A07F730EF8a16aD9aFcFB</span><span class="p">);</span>
+<span class="kt">bytes</span> <span class="k">memory</span> <span class="n">creds</span> <span class="o">=</span> <span class="n">vjwt</span><span class="p">.</span><span class="n">credsForAddress</span><span class="p">(</span><span class="mh">0xdbd6b2c02338919edaa192f5b60f5e5840a50079</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p>Return value</p>
+</blockquote>
+<div class="highlight"><pre class="highlight solidity tab-solidity"><code><span class="n">creds</span> <span class="o">==</span> <span class="mi">0</span><span class="n">x</span><span class="p">...</span>
+</code></pre></div>
+<p>Get a user&#39;s credentials (e.g., their Twitter handle), given their address.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>address</td>
+<td>A user&#39;s crypto address.</td>
+</tr>
+</tbody></table>
+<h2 id='verifyjwt-addressforcreds-bytes-creds'>VerifyJWT.addressForCreds(bytes creds)</h2>
+<blockquote>
+<p>Get the address linked to theses specific credentials on this specific VerifyJWT contract.</p>
+</blockquote>
+<div class="highlight"><pre class="highlight solidity tab-solidity"><code><span class="n">VerifyJWT</span> <span class="n">vjwt</span> <span class="o">=</span> <span class="n">VerifyJWT</span><span class="p">(</span><span class="mh">0x97A2FAf052058b86a52A07F730EF8a16aD9aFcFB</span><span class="p">);</span>
+<span class="kt">address</span> <span class="n">user</span> <span class="o">=</span> <span class="n">vjwt</span><span class="p">.</span><span class="n">addressForCreds</span><span class="p">(</span><span class="mi">0</span><span class="n">x</span><span class="p">...)</span>
+</code></pre></div>
+<blockquote>
+<p>Return value</p>
+</blockquote>
+<div class="highlight"><pre class="highlight solidity tab-solidity"><code><span class="n">user</span> <span class="o">==</span> <span class="mh">0xdbd6b2c02338919edaa192f5b60f5e5840a50079</span>
+</code></pre></div>
+<p>Get a user&#39;s address, given their credentials (e.g., their Twitter handle).</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>creds</td>
+<td>A user&#39;s credentials represented as bytes.</td>
+</tr>
+</tbody></table>
+<h2 id='wtfbios-bioforaddress-address-user'>WTFBios.bioForAddress(address user)</h2>
+<blockquote>
+<p>Get a user&#39;s Holonym bio</p>
+</blockquote>
+<div class="highlight"><pre class="highlight solidity tab-solidity"><code><span class="n">WTFBios</span> <span class="n">wtfBios</span> <span class="o">=</span> <span class="n">WTFBios</span><span class="p">(</span><span class="mh">0x99708c7c7d4895cFF1C81d0Ff96152b5AEcc3E78</span><span class="p">);</span>
+<span class="kt">string</span> <span class="k">memory</span> <span class="n">bio</span> <span class="o">=</span> <span class="n">wtfBios</span><span class="p">.</span><span class="n">bioForAddress</span><span class="p">(</span><span class="mh">0xdbd6b2c02338919edaa192f5b60f5e5840a50079</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p>Return value</p>
+</blockquote>
+<div class="highlight"><pre class="highlight solidity tab-solidity"><code><span class="n">bio</span> <span class="o">==</span> <span class="s">'The gerbil (the real one) 🐹'</span>
+</code></pre></div>
+<p>Get a user&#39;s Holonym bio, given their address.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>user</td>
+<td>A user&#39;s crypto address.</td>
+</tr>
+</tbody></table>
+<h2 id='wtfbios-nameforaddress-address-user'>WTFBios.nameForAddress(address user)</h2>
+<blockquote>
+<p>Get a user&#39;s Holonym name</p>
+</blockquote>
+<div class="highlight"><pre class="highlight solidity tab-solidity"><code><span class="n">WTFBios</span> <span class="n">wtfBios</span> <span class="o">=</span> <span class="n">WTFBios</span><span class="p">(</span><span class="mh">0x99708c7c7d4895cFF1C81d0Ff96152b5AEcc3E78</span><span class="p">);</span>
+<span class="kt">string</span> <span class="k">memory</span> <span class="n">name</span> <span class="o">=</span> <span class="n">wtfBios</span><span class="p">.</span><span class="n">nameForAddress</span><span class="p">(</span><span class="mh">0xdbd6b2c02338919edaa192f5b60f5e5840a50079</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p>Return value</p>
+</blockquote>
+<div class="highlight"><pre class="highlight solidity tab-solidity"><code><span class="n">name</span> <span class="o">==</span> <span class="s">'Jerry'</span>
+</code></pre></div>
+<p>Get a user&#39;s name, given their address.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>user</td>
+<td>A user&#39;s crypto address.</td>
+</tr>
+</tbody></table>
+<h2 id='contract-addresses'>Contract Addresses</h2>
+<p>Contract addresses (on Gnosis Chain):</p>
+
+<p>IdentityAggregator: 0x4278b0B8aC44dc61579d5Ec3F01D8EA44873b079</p>
+
+<p>WTFBios: 0x99708c7c7d4895cFF1C81d0Ff96152b5AEcc3E78</p>
+
+<p>VerifyJWT (orcid): 0x4D39C84712C9A13f4d348050E82A2Eeb45DB5e29</p>
+
+<p>VerifyJWT (google): 0xC334b3465790bC77299D42635B25D77E3e46A78b</p>
+
+<p>VerifyJWT (twitter): 0x97A2FAf052058b86a52A07F730EF8a16aD9aFcFB</p>
+
+<p>VerifyJWT (github): 0x6029BD948942c7b355149087c47462c66Ea147ba</p>
+
+<p>VerifyJWT (discord): 0xca6d00d3f78AD5a9B386824227BBe442c84344EA</p>
 <!-- # Errors
 
 <aside class="notice">

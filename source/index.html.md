@@ -21,9 +21,13 @@ meta:
 
 # Introduction
 
-Welcome to the docs for the wtf-lib JavaScript library, a library that allows developers to query WTF protocol smart contracts.
+Welcome to the docs for Holonym. 
+Here you can find docs for 
+- wtf-lib, a JavaScript library that allows developers to query WTF protocol smart contracts
+- WTF smart contracts
 
-# Configuration
+# wtf-lib
+## Configuration
 
 > Import wtf-lib (CommonJS)
 
@@ -50,15 +54,13 @@ Import and set the URL(s) of your JSON RPC provider(s) (e.g., to your Pocket, In
 The default provider links to Ropsten testnet. If you are on a different network, you should use a custom provider. You will have best performance with a custom RPC provider rather than a network's default RPC. 
 </aside>
 
-# Accessor Functions
-
 
 ## getHolo(address)
 
 > Get a user's holo (i.e., their name, bio, and all their credentials).
 
 ```javascript
-const userHolo = await getHolo('0xdbd6b2c02338919edaa192f5b60f5e5840a50079')
+const userHolo = await wtf.getHolo('0xdbd6b2c02338919edaa192f5b60f5e5840a50079')
 ```
 
 > Returns
@@ -84,7 +86,6 @@ This function returns the user's name, bio, and all their credentials, given the
 
 It organizes the user's holo by blockchain network. A user can use the same address to register different credentials on different blockchains. By organizing a user's holo by network, `getHolo` allows projects to use holos from only certain networks and to resolve any contradictions that might arise with using multiple profiles.
 
-### Parameters
 
 Parameter | Description
 --------- | -----------
@@ -96,7 +97,7 @@ address | A user's crypto address.
 > Get a user's gmail.
 
 ```javascript
-const userGmail = await credentialsForAddress('0xdbd6b2c02338919edaa192f5b60f5e5840a50079', 'google')
+const userGmail = await wtf.credentialsForAddress('0xdbd6b2c02338919edaa192f5b60f5e5840a50079', 'google')
 ```
 
 > Returns
@@ -107,7 +108,6 @@ const userGmail = await credentialsForAddress('0xdbd6b2c02338919edaa192f5b60f5e5
 
 This function returns the user's credentials (e.g., their ORCID ID or gmail), given the user's crypto address. 
 
-### Parameters
 
 Parameter | Description
 --------- | -----------
@@ -124,7 +124,7 @@ Remember — a happy kitten is an authenticated kitten!
 > Get a user's crypto address.
 
 ```javascript
-const userAddress = await addressForCredentials('thejerrygerbil@gmail.com', 'google')
+const userAddress = await wtf.addressForCredentials('thejerrygerbil@gmail.com', 'google')
 ```
 
 > Returns
@@ -135,7 +135,6 @@ const userAddress = await addressForCredentials('thejerrygerbil@gmail.com', 'goo
 
 This function returns the user's crypto address, given their credentials (e.g., their ORCID ID or gmail). 
 
-### Parameters
 
 Parameter | Description
 --------- | -----------
@@ -148,7 +147,7 @@ service | The service that issued the credentials (e.g., ORCID or Google).
 > Get a user's name.
 
 ```javascript
-const userName = await nameForAddress('0xdbd6b2c02338919edaa192f5b60f5e5840a50079')
+const userName = await wtf.nameForAddress('0xdbd6b2c02338919edaa192f5b60f5e5840a50079')
 ```
 
 > Returns
@@ -159,7 +158,6 @@ const userName = await nameForAddress('0xdbd6b2c02338919edaa192f5b60f5e5840a5007
 
 This function returns the user's name, given their address.
 
-### Parameters
 
 Parameter | Description
 --------- | -----------
@@ -171,7 +169,7 @@ address | A user's crypto address.
 > Get a user's bio/description.
 
 ```javascript
-const userBio = await bioForAddress('0xdbd6b2c02338919edaa192f5b60f5e5840a50079')
+const userBio = await wtf.bioForAddress('0xdbd6b2c02338919edaa192f5b60f5e5840a50079')
 ```
 
 > Returns
@@ -182,9 +180,152 @@ const userBio = await bioForAddress('0xdbd6b2c02338919edaa192f5b60f5e5840a50079'
 
 This function returns the user's bio/description, given their address.
 
-### Parameters
 
 Parameter | Description
 --------- | -----------
 address | A user's crypto address.
 
+
+# WTF smart contracts
+## Introduction
+The WTF protocol consists of 3 types of smart contracts:
+
+- VerifyJWT (verifies JWTs and stores user's credentials (e.g., their ORCID))
+
+- WTFBios (allows users to set the name and bio associated with their Holo)
+
+- IdentityAggregator (aggregates all profile data for each Holonym user)
+
+For any blockchain network to which WTF contracts have been deployed, there will be multiple VerifyJWT contracts but only one WTFBios contract and one IdentityAggregator contract. There is a VerifyJWT contract for Twitter, one for ORCID, etc.
+
+All credentials (e.g., a user's Twitter handle) are stored as bytes. You can convert bytes to string in JavaScript with the following line: `Buffer.from(creds.replace('0x',''), 'hex').toString()`.
+
+WTF contracts are currently deployed on Gnosis Chain. See the [contract addresses section](#contract-addresses) for the full list of contract addresses.
+
+Each contract exposes functions to query user data.
+
+## IdentityAggregator.getAllAccounts(address user)
+
+> Get all accounts associated with this user's crypto address. 
+
+```solidity
+IdentityAggregator idAggregator = IdentityAggregator(0x4278b0B8aC44dc61579d5Ec3F01D8EA44873b079);
+(bytes[] memory creds, string memory name, string memory bio) = idAggregator.getAllAccounts(0xdbd6b2c02338919edaa192f5b60f5e5840a50079)
+```
+
+> Return values
+
+```solidity
+creds == [0x..., 0x...]
+name == 'Jerry'
+bio == 'The gerbil (the real one) 🐹'
+```
+
+Get all accounts associated with this user's crypto address. The `getHolo` function in wtf-lib uses `getAllAccounts` under the hood. We expect creds to be converted to strings in the front end.
+
+Parameter | Description
+--------- | -----------
+user | A user's crypto address.
+
+## VerifyJWT.credsForAddress(address user)
+
+> Get the creds linked to this user's crypto address on this specific VerifyJWT contract.
+
+```solidity
+VerifyJWT vjwt = VerifyJWT(0x97A2FAf052058b86a52A07F730EF8a16aD9aFcFB);
+bytes memory creds = vjwt.credsForAddress(0xdbd6b2c02338919edaa192f5b60f5e5840a50079)
+```
+
+> Return value
+
+```solidity
+creds == 0x...
+```
+
+Get a user's credentials (e.g., their Twitter handle), given their address.
+
+Parameter | Description
+--------- | -----------
+address | A user's crypto address.
+
+
+## VerifyJWT.addressForCreds(bytes creds)
+
+> Get the address linked to theses specific credentials on this specific VerifyJWT contract.
+
+```solidity
+VerifyJWT vjwt = VerifyJWT(0x97A2FAf052058b86a52A07F730EF8a16aD9aFcFB);
+address user = vjwt.addressForCreds(0x...)
+```
+
+> Return value
+
+```solidity
+user == 0xdbd6b2c02338919edaa192f5b60f5e5840a50079
+```
+
+Get a user's address, given their credentials (e.g., their Twitter handle).
+
+Parameter | Description
+--------- | -----------
+creds | A user's credentials represented as bytes.
+
+
+## WTFBios.bioForAddress(address user)
+
+> Get a user's Holonym bio
+
+```solidity
+WTFBios wtfBios = WTFBios(0x99708c7c7d4895cFF1C81d0Ff96152b5AEcc3E78);
+string memory bio = wtfBios.bioForAddress(0xdbd6b2c02338919edaa192f5b60f5e5840a50079)
+```
+
+> Return value
+
+```solidity
+bio == 'The gerbil (the real one) 🐹'
+```
+
+Get a user's Holonym bio, given their address.
+
+Parameter | Description
+--------- | -----------
+user | A user's crypto address.
+
+## WTFBios.nameForAddress(address user)
+
+> Get a user's Holonym name
+
+```solidity
+WTFBios wtfBios = WTFBios(0x99708c7c7d4895cFF1C81d0Ff96152b5AEcc3E78);
+string memory name = wtfBios.nameForAddress(0xdbd6b2c02338919edaa192f5b60f5e5840a50079)
+```
+
+> Return value
+
+```solidity
+name == 'Jerry'
+```
+
+Get a user's name, given their address.
+
+Parameter | Description
+--------- | -----------
+user | A user's crypto address.
+
+## Contract Addresses
+Contract addresses (on Gnosis Chain):
+
+IdentityAggregator: 0x4278b0B8aC44dc61579d5Ec3F01D8EA44873b079
+
+WTFBios: 0x99708c7c7d4895cFF1C81d0Ff96152b5AEcc3E78
+
+VerifyJWT (orcid): 0x4D39C84712C9A13f4d348050E82A2Eeb45DB5e29
+
+VerifyJWT (google): 0xC334b3465790bC77299D42635B25D77E3e46A78b
+
+VerifyJWT (twitter): 0x97A2FAf052058b86a52A07F730EF8a16aD9aFcFB
+
+VerifyJWT (github): 0x6029BD948942c7b355149087c47462c66Ea147ba
+
+VerifyJWT (discord): 0xca6d00d3f78AD5a9B386824227BBe442c84344EA

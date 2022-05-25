@@ -188,6 +188,75 @@ Parameter | Description
 address | A user's crypto address.
 
 
+## getContractAddresses()
+
+> Get the addresses of all deployed WTF contracts.
+
+```javascript
+const wtfContractAddrs = await wtf.getContractAddresses()
+```
+
+> Returns
+
+```javascript
+{
+  "production": {
+    "IdentityAggregator": {
+      "gnosis": "0x..."
+    },
+    "WTFBios": {
+      "gnosis": "0x..."
+    },
+    "VerifyJWT": {
+      "gnosis": {
+        "orcid": "0x...",
+        "google": "0x...",
+        "twitter": "0x...",
+        "github" : "0x...",
+        "discord" : "0x..."
+      }
+    }
+  }
+}
+```
+
+You can use this function if you would like to call the WTF contracts directly from your JavaScript. This function returns a JSON object containing all the contract addresses for the different WTF contracts. 
+
+## getContractABIs()
+
+> Get the interfaces of all deployed WTF contracts.
+
+```javascript
+const wtfContractInterfaces = await wtf.getContractABIs()
+```
+
+> Returns
+
+```javascript
+{
+    "IdentityAggregator": [
+        "event AddSupportForContract(string)",
+        ...
+        "function getAllAccounts(address) view returns (bytes[], string, string)",
+        ...
+    ]
+    "WTFBios": [
+        "event RemoveUserNameAndBio(address)",
+        ...
+        "function bioForAddress(address) view returns (string)",
+        ...
+    ]
+    "VerifyJWT": [
+        ...
+        "function credsForAddress(address) view returns (bytes)",
+        ...
+    ]
+}
+```
+
+You can use this function if you would like to call the WTF contracts directly from your JavaScript. This function returns a JSON object containing all the contract addresses for the different WTF contracts. 
+
+
 # WTF smart contracts
 ## Introduction
 The WTF protocol consists of 3 types of smart contracts:
@@ -333,3 +402,14 @@ VerifyJWT (twitter): 0x97A2FAf052058b86a52A07F730EF8a16aD9aFcFB
 VerifyJWT (github): 0x6029BD948942c7b355149087c47462c66Ea147ba
 
 VerifyJWT (discord): 0xca6d00d3f78AD5a9B386824227BBe442c84344EA
+
+# HTML Components
+Holonym components you can use in your front end.
+
+## Create Holonym Profile
+Directs user to a page to create their Holo profile.
+
+```html
+<a href=”https://whoisthis.wtf/myholo”>Create your public profile</a>
+```
+

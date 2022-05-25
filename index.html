@@ -336,6 +336,12 @@
                   <li>
                     <a href="#bioforaddress-address" class="toc-h2 toc-link" data-title="bioForAddress(address)">bioForAddress(address)</a>
                   </li>
+                  <li>
+                    <a href="#getcontractaddresses" class="toc-h2 toc-link" data-title="getContractAddresses()">getContractAddresses()</a>
+                  </li>
+                  <li>
+                    <a href="#getcontractabis" class="toc-h2 toc-link" data-title="getContractABIs()">getContractABIs()</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -361,6 +367,14 @@
                   </li>
                   <li>
                     <a href="#contract-addresses" class="toc-h2 toc-link" data-title="Contract Addresses">Contract Addresses</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#html-components" class="toc-h1 toc-link" data-title="HTML Components">HTML Components</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#create-holonym-profile" class="toc-h2 toc-link" data-title="Create Holonym Profile">Create Holonym Profile</a>
                   </li>
               </ul>
           </li>
@@ -548,6 +562,66 @@ Remember — a happy kitten is an authenticated kitten!
 <td>A user&#39;s crypto address.</td>
 </tr>
 </tbody></table>
+<h2 id='getcontractaddresses'>getContractAddresses()</h2>
+<blockquote>
+<p>Get the addresses of all deployed WTF contracts.</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">wtfContractAddrs</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">wtf</span><span class="p">.</span><span class="nx">getContractAddresses</span><span class="p">()</span>
+</code></pre></div>
+<blockquote>
+<p>Returns</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="dl">"</span><span class="s2">production</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">IdentityAggregator</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+      <span class="dl">"</span><span class="s2">gnosis</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0x...</span><span class="dl">"</span>
+    <span class="p">},</span>
+    <span class="dl">"</span><span class="s2">WTFBios</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+      <span class="dl">"</span><span class="s2">gnosis</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0x...</span><span class="dl">"</span>
+    <span class="p">},</span>
+    <span class="dl">"</span><span class="s2">VerifyJWT</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+      <span class="dl">"</span><span class="s2">gnosis</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="dl">"</span><span class="s2">orcid</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0x...</span><span class="dl">"</span><span class="p">,</span>
+        <span class="dl">"</span><span class="s2">google</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0x...</span><span class="dl">"</span><span class="p">,</span>
+        <span class="dl">"</span><span class="s2">twitter</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0x...</span><span class="dl">"</span><span class="p">,</span>
+        <span class="dl">"</span><span class="s2">github</span><span class="dl">"</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">0x...</span><span class="dl">"</span><span class="p">,</span>
+        <span class="dl">"</span><span class="s2">discord</span><span class="dl">"</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">0x...</span><span class="dl">"</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>You can use this function if you would like to call the WTF contracts directly from your JavaScript. This function returns a JSON object containing all the contract addresses for the different WTF contracts. </p>
+<h2 id='getcontractabis'>getContractABIs()</h2>
+<blockquote>
+<p>Get the interfaces of all deployed WTF contracts.</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">wtfContractInterfaces</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">wtf</span><span class="p">.</span><span class="nx">getContractABIs</span><span class="p">()</span>
+</code></pre></div>
+<blockquote>
+<p>Returns</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="dl">"</span><span class="s2">IdentityAggregator</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="dl">"</span><span class="s2">event AddSupportForContract(string)</span><span class="dl">"</span><span class="p">,</span>
+        <span class="p">...</span>
+        <span class="dl">"</span><span class="s2">function getAllAccounts(address) view returns (bytes[], string, string)</span><span class="dl">"</span><span class="p">,</span>
+        <span class="p">...</span>
+    <span class="p">]</span>
+    <span class="dl">"</span><span class="s2">WTFBios</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="dl">"</span><span class="s2">event RemoveUserNameAndBio(address)</span><span class="dl">"</span><span class="p">,</span>
+        <span class="p">...</span>
+        <span class="dl">"</span><span class="s2">function bioForAddress(address) view returns (string)</span><span class="dl">"</span><span class="p">,</span>
+        <span class="p">...</span>
+    <span class="p">]</span>
+    <span class="dl">"</span><span class="s2">VerifyJWT</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">...</span>
+        <span class="dl">"</span><span class="s2">function credsForAddress(address) view returns (bytes)</span><span class="dl">"</span><span class="p">,</span>
+        <span class="p">...</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>You can use this function if you would like to call the WTF contracts directly from your JavaScript. This function returns a JSON object containing all the contract addresses for the different WTF contracts. </p>
 <h1 id='wtf-smart-contracts'>WTF smart contracts</h1><h2 id='introduction-2'>Introduction</h2>
 <p>The WTF protocol consists of 3 types of smart contracts:</p>
 
@@ -709,7 +783,12 @@ Remember — a happy kitten is an authenticated kitten!
 <p>VerifyJWT (github): 0x6029BD948942c7b355149087c47462c66Ea147ba</p>
 
 <p>VerifyJWT (discord): 0xca6d00d3f78AD5a9B386824227BBe442c84344EA</p>
-<!-- # Errors
+<h1 id='html-components'>HTML Components</h1>
+<p>Holonym components you can use in your front end.</p>
+<h2 id='create-holonym-profile'>Create Holonym Profile</h2>
+<p>Directs user to a page to create their Holo profile.</p>
+<div class="highlight"><pre class="highlight html tab-html"><code><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">”https://whoisthis.wtf/myholo”</span><span class="nt">&gt;</span>Create your public profile<span class="nt">&lt;/a&gt;</span>
+</code></pre></div><!-- # Errors
 
 <aside class="notice">
 This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.

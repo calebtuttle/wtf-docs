@@ -410,6 +410,6 @@ Holonym components you can use in your front end.
 Directs user to a page to create their Holo profile.
 
 ```html
-<a href=”https://whoisthis.wtf/myholo”>Create your public profile</a>
+<a href=”https://app.holonym.id/myholo”>Create your public profile</a>
 ```
 
